@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float 
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, BigInteger
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class planets(db.Model):
+class Planets(db.Model):
     # __tablename__ = 'Planets'
     id =db.Column(db.Integer, primary_key=True)
     name =db.Column( db.String(50))
@@ -17,7 +17,7 @@ class planets(db.Model):
     gravity =db.Column( db.String(200), nullable=False)
     terrain =db.Column( db.String(200), nullable=False)
     surface_water =db.Column( db.Integer, nullable=False)
-    population =db.Column( db.Integer, nullable=False)
+    population =db.Column( db.BigInteger, nullable=False)
     url =db.Column( db.String(200), nullable=False)
 
     def __repr__(self):
@@ -38,7 +38,7 @@ class planets(db.Model):
             "url": self.url
         }
 
-class people(db.Model):
+class People(db.Model):
     # __tablename__ = 'People'
     id =db.Column( db.Integer, primary_key=True)
     name =db.Column( db.String(50), nullable=True)
@@ -70,7 +70,7 @@ class people(db.Model):
             "url": self.url
         }
 
-class starships(db.Model):
+class Starships(db.Model):
     # __tablename__ = 'Starships'
     id =db.Column( db.Integer, primary_key=True)
     name =db.Column( db.String(50), nullable=True)
@@ -108,7 +108,7 @@ class starships(db.Model):
             "url": self.url
         }
 
-class species(db.Model):
+class Species(db.Model):
     # __tablename__ = 'Species'
     id =db.Column( db.Integer, primary_key=True)
     name =db.Column( db.String(50), nullable=True)
@@ -160,11 +160,14 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
-class favorites(db.Model):
+class Favorites(db.Model):
     # __tablename__ = 'Favorites'
     favoriteid = db.Column( db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey('user.id'))
-    type = db.Column( db.String(15), nullable=False)
+    tipo = db.Column( db.String(15), nullable=False)
+    name = db.Column( db.String(50), nullable=True)
+
+
     
     def to_dict(self):
         return '<favoriteid %r>' % self.favoriteid
