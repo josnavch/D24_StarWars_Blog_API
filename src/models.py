@@ -6,25 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class User(db.Model):
-    # __tablename__ = 'User'
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-
-    def __repr__(self):
-        return '<User %r>' % self.username
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            "is_active": self.is_active
-            # do not serialize the password, its a security breach
-        }
-
-class Planets(db.Model):
+class planets(db.Model):
     # __tablename__ = 'Planets'
     id =db.Column(db.Integer, primary_key=True)
     name =db.Column( db.String(50))
@@ -56,7 +38,7 @@ class Planets(db.Model):
             "url": self.url
         }
 
-class People(db.Model):
+class people(db.Model):
     # __tablename__ = 'People'
     id =db.Column( db.Integer, primary_key=True)
     name =db.Column( db.String(50), nullable=True)
@@ -88,7 +70,7 @@ class People(db.Model):
             "url": self.url
         }
 
-class Starships(db.Model):
+class starships(db.Model):
     # __tablename__ = 'Starships'
     id =db.Column( db.Integer, primary_key=True)
     name =db.Column( db.String(50), nullable=True)
@@ -126,7 +108,7 @@ class Starships(db.Model):
             "url": self.url
         }
 
-class Species(db.Model):
+class species(db.Model):
     # __tablename__ = 'Species'
     id =db.Column( db.Integer, primary_key=True)
     name =db.Column( db.String(50), nullable=True)
@@ -160,7 +142,25 @@ class Species(db.Model):
             "url": self.url
         }
 
-class Favorites(db.Model):
+class User(db.Model):
+    # __tablename__ = 'User'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "is_active": self.is_active
+            # do not serialize the password, its a security breach
+        }
+
+class favorites(db.Model):
     # __tablename__ = 'Favorites'
     favoriteid = db.Column( db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey('user.id'))
