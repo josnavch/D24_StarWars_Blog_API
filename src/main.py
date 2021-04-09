@@ -29,6 +29,7 @@ def handle_invalid_usage(error):
 @app.route('/')
 def sitemap():
     return generate_sitemap(app)
+    
 # ***************************** BEGIN USERS ***************************** 
 @app.route('/user', methods=['GET'])
 def handle_get_users():
@@ -52,25 +53,26 @@ def handle_get_user(user_id):
         user = query.serialize()
 
     return jsonify(user), 200
+# ***************************** END USERS ***************************** 
 
+# ***************************** BEGIN USERS FAVORITES ***************************** 
 @app.route('/user/<int:user_id>/favorites', methods=['GET'])
-def handle_get_user_favorites():
+def handle_get_user_favorites(user_id):
 
-    query = Favorites.query.get(user_id)
+    query = Favorites.query.filter_by(user_id=user_id)
 
     if not query:
         raise APIException('User favorites not found', status_code=404)
     else:
-        favorites = query.serialize()
+        favorites = list(map(lambda x: x.serialize(), query))
 
     return jsonify(favorites), 200
 
 @app.route('/user/<int:user_id>/favorites', methods=['POST'])
-def handle_add_user_favorites():
+def handle_add_user_favorite(user_id):
     
     request_body = request.get_json()
     user = Favorites(
-        favoriteid = request_body["favoriteid"],
         user_id = request_body["user_id"], 
         tipo = request_body["tipo"],
         name = request_body["name"]
@@ -79,7 +81,19 @@ def handle_add_user_favorites():
     db.session.commit()
 
     return jsonify("Favorite added correctly."), 200
-# ***************************** END USERS ***************************** 
+
+@app.route('/favorite/<int:favorite_id>', methods=['DELETE'])
+def handle_delete_favorite(favorite_id):
+
+    favorite = Favorites.query.get(favorite_id)
+   
+    if favorite is None:
+        raise APIException('Favorite not found', status_code=404)
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return jsonify("Favorite successfully removed.",favorite.name), 200
+# ***************************** END USERS FAVORITES ***************************** 
 
 # ***************************** BEGIN PLANETS ***************************** 
 @app.route('/planets', methods=['GET'])

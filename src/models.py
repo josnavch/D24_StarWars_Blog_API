@@ -163,7 +163,7 @@ class User(db.Model):
 class Favorites(db.Model):
     # __tablename__ = 'Favorites'
     favoriteid = db.Column( db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     tipo = db.Column( db.String(15), nullable=False)
     name = db.Column( db.String(50), nullable=True)
 
@@ -172,8 +172,7 @@ class Favorites(db.Model):
     
     def serialize(self):
         return {
-            "favoriteid": self.favoriteid,
             "user_id": self.user_id,
-            "type": self.type,
+            "tipo": self.tipo,
             "name": self.name
         }
