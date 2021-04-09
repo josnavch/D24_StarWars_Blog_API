@@ -29,16 +29,59 @@ def handle_invalid_usage(error):
 @app.route('/')
 def sitemap():
     return generate_sitemap(app)
-
+# ***************************** BEGIN USERS ***************************** 
 @app.route('/user', methods=['GET'])
-def handle_hello():
+def handle_get_users():
 
-    response_body = {
-        "msg": "Hello, this is your GET /user response "
-    }
+    query = User.query.all()
+    if not query:
+        raise APIException('Users not found', status_code=404)
+    else:
+        all_users = list(map(lambda x: x.serialize(), query))
 
-    return jsonify(response_body), 200
+    return jsonify(all_users), 200
 
+@app.route('/user/<int:user_id>', methods=['GET'])
+def handle_get_user(user_id):
+
+    query = User.query.get(user_id)
+
+    if not query:
+        raise APIException('User not found', status_code=404)
+    else:
+        user = query.serialize()
+
+    return jsonify(user), 200
+
+@app.route('/user/<int:user_id>/favorites', methods=['GET'])
+def handle_get_user_favorites():
+
+    query = Favorites.query.get(user_id)
+
+    if not query:
+        raise APIException('User favorites not found', status_code=404)
+    else:
+        favorites = query.serialize()
+
+    return jsonify(favorites), 200
+
+@app.route('/user/<int:user_id>/favorites', methods=['POST'])
+def handle_add_user_favorites():
+    
+    request_body = request.get_json()
+    user = Favorites(
+        favoriteid = request_body["favoriteid"],
+        user_id = request_body["user_id"], 
+        tipo = request_body["tipo"],
+        name = request_body["name"]
+        )
+    db.session.add(user)
+    db.session.commit()
+
+    return jsonify("Favorite added correctly."), 200
+# ***************************** END USERS ***************************** 
+
+# ***************************** BEGIN PLANETS ***************************** 
 @app.route('/planets', methods=['GET'])
 def handle_get_planets():
 
@@ -84,7 +127,113 @@ def handle_add_planets():
 
     return jsonify("Planet added correctly."), 200
     
+# ***************************** END PLANETS ***************************** 
 
+# ***************************** BEGIN PEOPLE ***************************** 
+@app.route('/people', methods=['GET'])
+def handle_get_people():
+
+    query = People.query.all()
+
+    # map the results and your list of planets  inside of the all_planets variable
+    all_people = list(map(lambda x: x.serialize(), query))
+
+    return jsonify(all_people), 200
+
+@app.route('/people/<int:people_id>', methods=['GET'])
+def handle_get_people_detail(people_id):
+    
+    query = People.query.get(people_id)
+
+    if not query:
+        raise APIException('People not found', status_code=404)
+    else:
+        people = query.serialize()
+
+    return jsonify(people), 200
+
+@app.route('/addpeople', methods=['POST'])
+def handle_add_people():
+   
+    request_body = request.get_json()
+
+    db.session.bulk_insert_mappings(People, request_body)
+    db.session.commit()
+
+    return jsonify("People added correctly."), 200
+# ***************************** END PEOPLE ***************************** 
+
+# ***************************** BEGIN STARSHIPS ***************************** 
+@app.route('/starships', methods=['GET'])
+def handle_get_starships():
+
+    query = Starships.query.all()
+
+    if not query:
+        raise APIException('Starships not found', status_code=404)
+    else:
+        all_starships = list(map(lambda x: x.serialize(), query))
+
+    return jsonify(all_starships), 200
+
+@app.route('/starships/<int:starship_id>', methods=['GET'])
+def handle_get_starship_detail(starship_id):
+    
+    query = Starships.query.get(starship_id)
+
+    if not query:
+        raise APIException('Starship not found', status_code=404)
+    else:
+        starship = query.serialize()
+
+    return jsonify(starship), 200
+
+@app.route('/addstarships', methods=['POST'])
+def handle_add_starships():
+   
+    request_body = request.get_json()
+
+    db.session.bulk_insert_mappings(Starships, request_body)
+    db.session.commit()
+
+    return jsonify("Starships added correctly."), 200
+# ***************************** END STARSHIPS *****************************
+
+# ***************************** BEGIN SPECIES ***************************** 
+@app.route('/species', methods=['GET'])
+def handle_get_species():
+
+    query = Species.query.all()
+
+    if not query:
+        raise APIException('Species not found', status_code=404)
+    else:
+        all_species = list(map(lambda x: x.serialize(), query))
+
+    return jsonify(all_species), 200
+
+@app.route('/species/<int:species_id>', methods=['GET'])
+def handle_get_species_detail(species_id):
+    
+    query = Species.query.get(species_id)
+
+    if not query:
+        raise APIException('Species not found', status_code=404)
+    else:
+        species = query.serialize()
+
+    return jsonify(species), 200
+
+@app.route('/addspecies', methods=['POST'])
+def handle_add_species():
+   
+    request_body = request.get_json()
+
+    db.session.bulk_insert_mappings(Species, request_body)
+    db.session.commit()
+
+    return jsonify("Species added correctly."), 200
+# ***************************** END SPECIES *****************************
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

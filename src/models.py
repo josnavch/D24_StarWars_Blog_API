@@ -77,9 +77,9 @@ class Starships(db.Model):
     model =db.Column( db.String(200), nullable=False)
     manufacturer =db.Column( db.String(200), nullable=False)
     cost_in_credits =db.Column( db.String(50), nullable=False)
-    length =db.Column( Float, nullable=False)
+    length =db.Column( db.String(50), nullable=False)
     max_atmosphering_speed =db.Column( db.String(200), nullable=False)
-    crew =db.Column( Float, nullable=False)
+    crew =db.Column( db.String(50), nullable=False)
     passengers =db.Column( db.String(50), nullable=False)
     cargo_capacity =db.Column( db.String(50), nullable=False)
     consumables =db.Column( db.String(200), nullable=False)
@@ -94,34 +94,34 @@ class Starships(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "model": self.height,
-            "manufacturer": self.mass,
-            "cost_in_credits": self.hair_color,
-            "length": self.skin_color,
-            "max_atmosphering_speed": self.eye_color,
-            "crew": self.birth_year,
-            "passengers": self.gender,
-            "cargo_capacity": self.homeworld,
+            "model": self.model,
+            "manufacturer": self.manufacturer,
+            "cost_in_credits": self.cost_in_credits,
+            "length": self.length,
+            "max_atmosphering_speed": self.max_atmosphering_speed,
+            "crew": self.crew,
+            "passengers": self.passengers,
+            "cargo_capacity": self.cargo_capacity,
             "consumables":self.consumables,
             "hyperdrive_rating":self.hyperdrive_rating,
-            "MGLT":self.mglt,
+            "MGLT":self.MGLT,
             "url": self.url
         }
 
 class Species(db.Model):
     # __tablename__ = 'Species'
-    id =db.Column( db.Integer, primary_key=True)
-    name =db.Column( db.String(50), nullable=True)
-    classification =db.Column( db.String(200), nullable=False)
-    designation =db.Column( db.String(200), nullable=False)
-    average_height =db.Column( db.String(50), nullable=False)
-    skin_colors =db.Column( db.String(200), nullable=False)
-    hair_colors =db.Column( db.String(200), nullable=False)
-    eye_colors =db.Column( db.String(200), nullable=False)
-    average_lifespan =db.Column( db.String(50), nullable=False)
-    homeworld =db.Column( db.String(200), nullable=False)
-    language =db.Column( db.String(200), nullable=False)
-    url =db.Column( db.String(200), nullable=False)
+    id = db.Column( db.Integer, primary_key=True)
+    name = db.Column( db.String(50), nullable=True)
+    classification = db.Column( db.String(200), nullable=False)
+    designation = db.Column( db.String(200), nullable=False)
+    average_height = db.Column( db.String(50), nullable=False)
+    skin_colors = db.Column( db.String(200), nullable=False)
+    hair_colors = db.Column( db.String(200), nullable=False)
+    eye_colors = db.Column( db.String(200), nullable=False)
+    average_lifespan = db.Column( db.String(50), nullable=False)
+    homeworld = db.Column( db.String(200), nullable=False)
+    language = db.Column( db.String(200), nullable=False)
+    url = db.Column( db.String(200), nullable=False)
 
     def __repr__(self):
         return '<id %r>' % self.id
@@ -167,8 +167,6 @@ class Favorites(db.Model):
     tipo = db.Column( db.String(15), nullable=False)
     name = db.Column( db.String(50), nullable=True)
 
-
-    
     def to_dict(self):
         return '<favoriteid %r>' % self.favoriteid
     
@@ -176,5 +174,6 @@ class Favorites(db.Model):
         return {
             "favoriteid": self.favoriteid,
             "user_id": self.user_id,
-            "type": self.type
+            "type": self.type,
+            "name": self.name
         }
