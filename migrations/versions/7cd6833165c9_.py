@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d144d5c5713c
+Revision ID: 7cd6833165c9
 Revises: 
-Create Date: 2021-04-08 03:26:01.505681
+Create Date: 2021-04-09 02:52:31.029492
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd144d5c5713c'
+revision = '7cd6833165c9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,8 +21,8 @@ def upgrade():
     op.create_table('people',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=True),
-    sa.Column('height', sa.Integer(), nullable=False),
-    sa.Column('mass', sa.Integer(), nullable=False),
+    sa.Column('height', sa.String(length=20), nullable=False),
+    sa.Column('mass', sa.String(length=20), nullable=False),
     sa.Column('hair_color', sa.String(length=200), nullable=False),
     sa.Column('skin_color', sa.String(length=200), nullable=False),
     sa.Column('eye_color', sa.String(length=200), nullable=False),
@@ -35,14 +35,14 @@ def upgrade():
     op.create_table('planets',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=True),
-    sa.Column('rotation_period', sa.Integer(), nullable=False),
-    sa.Column('orbital_period', sa.Integer(), nullable=False),
-    sa.Column('diameter', sa.Integer(), nullable=False),
+    sa.Column('rotation_period', sa.String(length=20), nullable=False),
+    sa.Column('orbital_period', sa.String(length=20), nullable=False),
+    sa.Column('diameter', sa.String(length=20), nullable=False),
     sa.Column('climate', sa.String(length=200), nullable=False),
     sa.Column('gravity', sa.String(length=200), nullable=False),
     sa.Column('terrain', sa.String(length=200), nullable=False),
-    sa.Column('surface_water', sa.Integer(), nullable=False),
-    sa.Column('population', sa.BigInteger(), nullable=False),
+    sa.Column('surface_water', sa.String(length=20), nullable=False),
+    sa.Column('population', sa.String(length=20), nullable=False),
     sa.Column('url', sa.String(length=200), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -51,11 +51,11 @@ def upgrade():
     sa.Column('name', sa.String(length=50), nullable=True),
     sa.Column('classification', sa.String(length=200), nullable=False),
     sa.Column('designation', sa.String(length=200), nullable=False),
-    sa.Column('average_height', sa.Integer(), nullable=False),
+    sa.Column('average_height', sa.String(length=50), nullable=False),
     sa.Column('skin_colors', sa.String(length=200), nullable=False),
     sa.Column('hair_colors', sa.String(length=200), nullable=False),
     sa.Column('eye_colors', sa.String(length=200), nullable=False),
-    sa.Column('average_lifespan', sa.Integer(), nullable=False),
+    sa.Column('average_lifespan', sa.String(length=50), nullable=False),
     sa.Column('homeworld', sa.String(length=200), nullable=False),
     sa.Column('language', sa.String(length=200), nullable=False),
     sa.Column('url', sa.String(length=200), nullable=False),
@@ -66,15 +66,15 @@ def upgrade():
     sa.Column('name', sa.String(length=50), nullable=True),
     sa.Column('model', sa.String(length=200), nullable=False),
     sa.Column('manufacturer', sa.String(length=200), nullable=False),
-    sa.Column('cost_in_credits', sa.Float(), nullable=False),
+    sa.Column('cost_in_credits', sa.String(length=50), nullable=False),
     sa.Column('length', sa.Float(), nullable=False),
     sa.Column('max_atmosphering_speed', sa.String(length=200), nullable=False),
     sa.Column('crew', sa.Float(), nullable=False),
-    sa.Column('passengers', sa.Integer(), nullable=False),
-    sa.Column('cargo_capacity', sa.Float(), nullable=False),
+    sa.Column('passengers', sa.String(length=50), nullable=False),
+    sa.Column('cargo_capacity', sa.String(length=50), nullable=False),
     sa.Column('consumables', sa.String(length=200), nullable=False),
-    sa.Column('hyperdrive_rating', sa.Float(), nullable=False),
-    sa.Column('MGLT', sa.Integer(), nullable=False),
+    sa.Column('hyperdrive_rating', sa.String(length=50), nullable=False),
+    sa.Column('MGLT', sa.String(length=50), nullable=False),
     sa.Column('url', sa.String(length=200), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )

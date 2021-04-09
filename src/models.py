@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, BigInteger
+from sqlalchemy import Column, ForeignKey, Integer, String, Float
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -10,14 +10,14 @@ class Planets(db.Model):
     # __tablename__ = 'Planets'
     id =db.Column(db.Integer, primary_key=True)
     name =db.Column( db.String(50))
-    rotation_period =db.Column( db.Integer , nullable=False)
-    orbital_period =db.Column( db.Integer, nullable=False)
-    diameter =db.Column( db.Integer, nullable=False)
+    rotation_period =db.Column( db.String(20), nullable=False)
+    orbital_period =db.Column( db.String(20), nullable=False)
+    diameter =db.Column( db.String(20), nullable=False)
     climate =db.Column( db.String(200), nullable=False)
     gravity =db.Column( db.String(200), nullable=False)
     terrain =db.Column( db.String(200), nullable=False)
-    surface_water =db.Column( db.Integer, nullable=False)
-    population =db.Column( db.BigInteger, nullable=False)
+    surface_water =db.Column( db.String(20), nullable=False)
+    population =db.Column( db.String(20), nullable=False)
     url =db.Column( db.String(200), nullable=False)
 
     def __repr__(self):
@@ -42,8 +42,8 @@ class People(db.Model):
     # __tablename__ = 'People'
     id =db.Column( db.Integer, primary_key=True)
     name =db.Column( db.String(50), nullable=True)
-    height =db.Column( db.Integer, nullable=False)
-    mass =db.Column( db.Integer, nullable=False)
+    height =db.Column( db.String(20), nullable=False)
+    mass =db.Column( db.String(20), nullable=False)
     hair_color =db.Column( db.String(200), nullable=False)
     skin_color =db.Column( db.String(200), nullable=False)
     eye_color =db.Column( db.String(200), nullable=False)
@@ -76,15 +76,15 @@ class Starships(db.Model):
     name =db.Column( db.String(50), nullable=True)
     model =db.Column( db.String(200), nullable=False)
     manufacturer =db.Column( db.String(200), nullable=False)
-    cost_in_credits =db.Column( Float, nullable=False)
+    cost_in_credits =db.Column( db.String(50), nullable=False)
     length =db.Column( Float, nullable=False)
     max_atmosphering_speed =db.Column( db.String(200), nullable=False)
     crew =db.Column( Float, nullable=False)
-    passengers =db.Column( db.Integer, nullable=False)
-    cargo_capacity =db.Column( Float, nullable=False)
+    passengers =db.Column( db.String(50), nullable=False)
+    cargo_capacity =db.Column( db.String(50), nullable=False)
     consumables =db.Column( db.String(200), nullable=False)
-    hyperdrive_rating =db.Column( Float, nullable=False)
-    MGLT =db.Column( db.Integer, nullable=False)
+    hyperdrive_rating =db.Column( db.String(50), nullable=False)
+    MGLT =db.Column( db.String(50), nullable=False)
     url =db.Column( db.String(200), nullable=False)
 
     def __repr__(self):
@@ -114,11 +114,11 @@ class Species(db.Model):
     name =db.Column( db.String(50), nullable=True)
     classification =db.Column( db.String(200), nullable=False)
     designation =db.Column( db.String(200), nullable=False)
-    average_height =db.Column( db.Integer, nullable=False)
+    average_height =db.Column( db.String(50), nullable=False)
     skin_colors =db.Column( db.String(200), nullable=False)
     hair_colors =db.Column( db.String(200), nullable=False)
     eye_colors =db.Column( db.String(200), nullable=False)
-    average_lifespan =db.Column( db.Integer, nullable=False)
+    average_lifespan =db.Column( db.String(50), nullable=False)
     homeworld =db.Column( db.String(200), nullable=False)
     language =db.Column( db.String(200), nullable=False)
     url =db.Column( db.String(200), nullable=False)
