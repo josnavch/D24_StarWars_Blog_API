@@ -73,7 +73,7 @@ def handle_add_user_favorite(user_id):
     
     request_body = request.get_json()
     user = Favorites(
-        user_id = request_body["user_id"], 
+        user_id = user_id, 
         tipo = request_body["tipo"],
         name = request_body["name"]
         )
@@ -140,6 +140,18 @@ def handle_add_planets():
     db.session.commit()
 
     return jsonify("Planet added correctly."), 200
+
+@app.route('/planets/<int:planet_id>', methods=['DELETE'])
+def handle_delete_planet(planet_id):
+
+    planet = Planets.query.get(planet_id)
+   
+    if planet is None:
+        raise APIException('Planet not found', status_code=404)
+    db.session.delete(planet)
+    db.session.commit()
+
+    return jsonify("Planet successfully removed.",planet.name), 200
     
 # ***************************** END PLANETS ***************************** 
 
@@ -175,6 +187,19 @@ def handle_add_people():
     db.session.commit()
 
     return jsonify("People added correctly."), 200
+
+@app.route('/people/<int:people_id>', methods=['DELETE'])
+def handle_delete_people(people_id):
+
+    people = People.query.get(people_id)
+   
+    if people is None:
+        raise APIException('People not found', status_code=404)
+    db.session.delete(people)
+    db.session.commit()
+
+    return jsonify("People successfully removed.",people.name), 200
+
 # ***************************** END PEOPLE ***************************** 
 
 # ***************************** BEGIN STARSHIPS ***************************** 
@@ -211,6 +236,18 @@ def handle_add_starships():
     db.session.commit()
 
     return jsonify("Starships added correctly."), 200
+
+@app.route('/starships/<int:starship_id>', methods=['DELETE'])
+def handle_delete_starship(starship_id):
+
+    starship = Starships.query.get(starship_id)
+   
+    if starship is None:
+        raise APIException('Starship not found', status_code=404)
+    db.session.delete(starship)
+    db.session.commit()
+
+    return jsonify("Starship successfully removed.",starship.name), 200
 # ***************************** END STARSHIPS *****************************
 
 # ***************************** BEGIN SPECIES ***************************** 
@@ -247,6 +284,18 @@ def handle_add_species():
     db.session.commit()
 
     return jsonify("Species added correctly."), 200
+
+@app.route('/species/<int:species_id>', methods=['DELETE'])
+def handle_delete_species(species_id):
+
+    species = Species.query.get(species_id)
+   
+    if species is None:
+        raise APIException('Species not found', status_code=404)
+    db.session.delete(species)
+    db.session.commit()
+
+    return jsonify("Species successfully removed.",species.name), 200
 # ***************************** END SPECIES *****************************
 
 # this only runs if `$ python src/main.py` is executed
