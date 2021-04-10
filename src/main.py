@@ -123,19 +123,6 @@ def handle_add_planets():
    
     request_body = request.get_json()
 
-    # planet = Planets(
-    #     name = request_body["name"], 
-    #     rotation_period = request_body["rotation_period"],
-    #     orbital_period = request_body["orbital_period"],
-    #     diameter = request_body["diameter"],
-    #     climate = request_body["climate"],
-    #     gravity = request_body["gravity"],
-    #     terrain = request_body["terrain"],
-    #     surface_water = request_body["surface_water"],
-    #     population = request_body["population"],
-    #     url = request_body["url"]
-    #     )
-    #db.session.add_all(planet)
     db.session.bulk_insert_mappings(Planets, request_body)
     db.session.commit()
 
